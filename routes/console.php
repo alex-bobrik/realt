@@ -17,3 +17,8 @@ use Illuminate\Support\Facades\Artisan;
 Artisan::command('inspire', function () {
     $this->comment(Inspiring::quote());
 })->describe('Display an inspiring quote');
+
+//
+//Artisan::command('parse:houses {rooms}', function () {
+//    $this->ha
+//})->describe('Parse houses from realt.by');
