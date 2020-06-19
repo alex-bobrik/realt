@@ -8,16 +8,9 @@ use Illuminate\Support\Facades\DB;
 
 class RealtController extends Controller
 {
-
     public function index()
     {
-        $houses = DB::table('houses')->paginate(5);
-
-//        return response()->json($houses);
-
-        return view('houses/index', [
-            'houses' => $houses,
-        ]);
+        return view('houses/index');
     }
 
     public function search(Request $request)
@@ -26,11 +19,8 @@ class RealtController extends Controller
         $priceTo = $request->input('priceTo');
         $rooms = $request->input('roomsAmount');
 
-//        $rooms = 1;
-//        return response()->json($priceFrom);
-
         // Search for a houses
-        if ($rooms === 'All') {
+        if ($rooms === 'No reason') {
             $houses = DB::table('houses')
                 ->whereBetween('price_per_day', [$priceFrom,$priceTo])
                 ->get();
@@ -41,16 +31,6 @@ class RealtController extends Controller
                 ->get();
         }
 
-//        $houses = Houses::all();
-
-
         return response()->json($houses);
-
-//        return view('houses/index', [
-//            'houses' => $houses,
-//            'from' => $priceFrom,
-//            'to' => $priceTo,
-//            'rooms' => $rooms,
-//        ]);
     }
 }

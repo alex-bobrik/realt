@@ -16,7 +16,6 @@
     <style>
         body {
             background: #F8F8F8;
-
         }
         .container {
             margin-top: 80px;
@@ -35,8 +34,6 @@
         .house-right {
             margin-right: 100px;
             width: 10%;
-        }
-        .house-left {
         }
         .button-search {
             width: 100%;
@@ -78,6 +75,7 @@
             this.state = { houses: [] };
         }
 
+        // Get async json info about houses
         gettingHouses = async (e) => {
             e.preventDefault();
 
@@ -131,7 +129,7 @@
                     <div className="form-group">
                         <label htmlFor="roomsAmount">Rooms</label>
                         <select className="form-control" name="roomsAmount">
-                            <option>All</option>
+                            <option>No reason</option>
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
