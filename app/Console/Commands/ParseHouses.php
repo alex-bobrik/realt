@@ -76,13 +76,27 @@ class ParseHouses extends Command
 
             $newHouse->title = $house->find('.title/.media/.media-body/a')->text;
             $newHouse->image_link = $house->find('.bd-item-left/.bd-item-left-top/img')->getAttribute('data-original');
-            $newHouse->updated = $house->find('.bd-item-right/.bd-item-right-top/.fl')[2]->text;
             $newHouse->contacts = $house->find('.bd-item-right-bottom-left/.mb0')->text;
-            $newHouse->description = $house->find('.bd-item-right-center/p')[1]->text;
+
+            // If text is not in <p>
+            try {
+                $newHouse->description = $house->find('.bd-item-right-center/p')[1]->text;
+            } catch (\ErrorException $e) {
+                // Parsing in <li>
+                $newHouse->description = $house->find('.bd-item-right-center/li')->text;
+            }
+
+            $newHouse->updated = $house->find('.bd-item-right/.bd-item-right-top/p.f11')[0]->text;
             $newHouse->rooms = $roomsAmount;
 
             $pricePerDay = $house->find('.price-byr')->text;
-            $newHouse->price_per_day = preg_replace("/[^0-9]/", '', $pricePerDay);
+            $pricePerDayNumeric = preg_replace("/[^0-9]/", '', $pricePerDay);
+
+            if (is_numeric($pricePerDayNumeric)) {
+                $newHouse->price_per_day = $pricePerDayNumeric;
+            } else {
+                $newHouse->price_per_day = null;
+            }
 
             $newHouse->save();
         }

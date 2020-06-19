@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d51db616-5dbb-4fa7-9f19-050f229b40b4" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Console/Commands/ParseHouses.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Console/Commands/ParseHouses.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/Http/Controllers/RealtController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/RealtController.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/console.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/console.php" afterDir="false" />
@@ -164,7 +167,7 @@
       <option name="presentableId" value="Default" />
       <updated>1592470424996</updated>
       <workItem from="1592470426630" duration="74000" />
-      <workItem from="1592470530131" duration="14343000" />
+      <workItem from="1592470530131" duration="23170000" />
     </task>
     <servers />
   </component>
