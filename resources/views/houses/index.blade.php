@@ -16,50 +16,89 @@
 
 
 <div class="container">
-    <form method="post" action="{{url('/houses/search')}}">
-        <div>
-            {{csrf_field()}}
-            <div class="form-group">
-                <label for="inputState">Rooms</label>
-                <select id="inputState" class="form-control" name="roomsAmount">
-                    <option selected>All</option>
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="service">Price from:</label>
-                <input type="number" name="priceFrom" min="0" class="form-control" value="{{$from ?? 0}}" required>
-            </div>
-            <div class="form-group">
-                <label for="city">Price to:</label>
-                <input type="number" name="priceTo" min="0" class="form-control" value="{{$to ?? 1000}}" required>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Search" class="btn btn-primary" style="width: 100%">
-            </div>
-        </div>
-    </form>
-
-    @if(!$houses->isEmpty())
-        @foreach($houses as $house)
-            <div class="house">
-                <img src="{{$house->image_link}}" alt="image">
-                <p>Title: {{$house->title}}</p>
-                <p>Description: {{$house->description}}</p>
-                <p>Price: {{$house->price_per_day}} r/d</p>
-            </div>
-        @endforeach
-    @else
-        <p>no houses for ur search</p>
-    @endif
-
-
-{{--{{$houses->withQueryString()->links()}}--}}
-
+    <div id="realt"></div>
 </div>
+
+
+<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.25.0/babel.min.js"></script>
+
+<script type="text/babel">
+
+    class House extends React.Component {
+
+        constructor(props) {
+            super(props);
+            this.state = { houses: [] };
+        }
+
+        gettingHouses = async (e) => {
+            e.preventDefault();
+
+            const priceFrom = e.target.elements.priceFrom.value;
+            const priceTo = e.target.elements.priceTo.value;
+            const rooms = e.target.elements.roomsAmount.value;
+
+            await fetch(`houses/search?priceFrom=${priceFrom}&priceTo=${priceTo}&roomsAmount=${rooms}`)
+                .then(response => response.json())
+                .then(data => {
+                    this.setState({ houses: data });
+                })
+        }
+
+        render() {
+            const { houses } = this.state;
+            return (
+                <div>
+                    <Form housesMethod = {this.gettingHouses}/>
+                    <div>
+                        {houses.map(hit =>
+                            <div className="house">
+                                <img src={hit.image_link} alt=""/>
+                                <p>{hit.title}</p>
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+            );
+        }
+    }
+
+    class Form extends React.Component {
+        render() {
+            return(
+                <form onSubmit={this.props.housesMethod}>
+                    <div className="form-group">
+                        <label htmlFor="roomsAmount">Rooms</label>
+                        <select className="form-control" name="roomsAmount">
+                            <option>All</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                        </select>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="priceFrom">Price from</label>
+                        <input type="number" name="priceFrom" className="form-control" min="0" required/>
+                    </div>
+                    <div className="form-group">
+                        <label htmlFor="priceTo">Price to</label>
+                        <input type="number" name="priceTo" className="form-control" min="0" required/>
+                    </div>
+                        <button className="btn btn-primary">Search</button>
+                </form>
+            )
+        }
+    }
+
+    ReactDOM.render(<House />, document.getElementById('realt'));
+
+
+</script>
+
 
 </body>
 </html>

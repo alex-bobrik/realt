@@ -13,6 +13,8 @@ class RealtController extends Controller
     {
         $houses = DB::table('houses')->paginate(5);
 
+//        return response()->json($houses);
+
         return view('houses/index', [
             'houses' => $houses,
         ]);
@@ -20,12 +22,14 @@ class RealtController extends Controller
 
     public function search(Request $request)
     {
-        // Search for a houses
-
         $priceFrom = $request->input('priceFrom');
         $priceTo = $request->input('priceTo');
         $rooms = $request->input('roomsAmount');
 
+//        $rooms = 1;
+//        return response()->json($priceFrom);
+
+        // Search for a houses
         if ($rooms === 'All') {
             $houses = DB::table('houses')
                 ->whereBetween('price_per_day', [$priceFrom,$priceTo])
@@ -37,17 +41,16 @@ class RealtController extends Controller
                 ->get();
         }
 
+//        $houses = Houses::all();
 
-//        $houses = DB::table('houses')
-//            ->whereBetween('price_per_day', [$priceFrom,$priceTo])
-//            ->where('rooms', $rooms)
-//            ->get();
 
-        return view('houses/index', [
-            'houses' => $houses,
-            'from' => $priceFrom,
-            'to' => $priceTo,
-            'rooms' => $rooms,
-        ]);
+        return response()->json($houses);
+
+//        return view('houses/index', [
+//            'houses' => $houses,
+//            'from' => $priceFrom,
+//            'to' => $priceTo,
+//            'rooms' => $rooms,
+//        ]);
     }
 }

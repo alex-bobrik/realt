@@ -17,6 +17,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/houses', 'RealtController@index');
-Route::post('/houses/search', 'RealtController@search')->name('searchHouses');
+Route::get('/houses', 'RealtController@index')->name('indexHouses');
+Route::get('/houses/search', 'RealtController@search')->name('searchHouses');
 
